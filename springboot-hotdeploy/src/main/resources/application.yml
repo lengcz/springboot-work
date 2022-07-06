@@ -1,0 +1,14 @@
+servers:
+#  ipAddress: 192.168.1.2
+#  ipaddress: 192.168.1.3
+#  ip-address: 192.168.1.4
+#  ip_add_ress: 192.168.1.5
+#  IPADDRESS: 192.168.1.6
+  iPADDResS: 192.168.1.6
+  port: 9999
+  timeout: 5
+  dataSize: 2MB
+
+test:
+  abc: hello
+abc: aaa
