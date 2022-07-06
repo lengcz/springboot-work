@@ -8,6 +8,8 @@ import com.it2.springbootmybatisplus.pojo.Book;
 import org.apache.http.HttpHost;
 
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.elasticsearch.action.admin.indices.flush.FlushRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -21,6 +23,8 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.GetIndexResponse;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
@@ -71,6 +75,22 @@ class SpringbootMybatisplusApplicationTests {
         client.indices().create(request,RequestOptions.DEFAULT);
     }
 
+    @Test
+    void testGetIndex() throws IOException {
+        GetIndexRequest request=new GetIndexRequest("books");
+        GetIndexResponse response=client.indices().get(request,RequestOptions.DEFAULT);
+        System.out.println(response.getAliases());
+        System.out.println(response.getMappings().get("books").sourceAsMap());
+        System.out.println(response.getSettings());
+    }
+
+    @Test
+    void testExistIndex() throws IOException {
+        GetIndexRequest request=new GetIndexRequest("books");
+        boolean bool=  client.indices().exists(request,RequestOptions.DEFAULT);
+        System.out.println(bool);
+    }
+
     /**
      * 删除索引
      */
@@ -79,6 +99,7 @@ class SpringbootMybatisplusApplicationTests {
         DeleteIndexRequest request=new DeleteIndexRequest("books");
         client.indices().delete(request,RequestOptions.DEFAULT);
     }
+
 
 
     @Test
@@ -210,6 +231,15 @@ class SpringbootMybatisplusApplicationTests {
             bulkRequest.add(request);
         }
         client.bulk(bulkRequest,RequestOptions.DEFAULT);
+    }
+
+
+    @Test
+    void refreshIndex() throws IOException {
+        FlushRequest request=new FlushRequest("books");
+
+        client.indices().flush(request,RequestOptions.DEFAULT);
+
     }
 
 }
