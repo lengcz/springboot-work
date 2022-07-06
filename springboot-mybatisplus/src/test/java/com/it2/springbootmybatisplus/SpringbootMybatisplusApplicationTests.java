@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -202,14 +203,12 @@ class SpringbootMybatisplusApplicationTests {
     void deleteDocsByIds() throws IOException {
         BulkRequest bulkRequest=new BulkRequest("books");
 
-        DeleteRequest request=new DeleteRequest();
-        request.id("1");
-        bulkRequest.add(request);
-
-        DeleteRequest request2=new DeleteRequest();
-        request2.id("2");
-        bulkRequest.add(request2);
-
+        List<Integer> ids= Arrays.asList(1,2);
+        for(Integer id:ids){
+            DeleteRequest request=new DeleteRequest();
+            request.id(id.toString());
+            bulkRequest.add(request);
+        }
         client.bulk(bulkRequest,RequestOptions.DEFAULT);
     }
 
