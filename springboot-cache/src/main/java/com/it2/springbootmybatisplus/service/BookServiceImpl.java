@@ -22,7 +22,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
     }
 
     @Override
-    @Cacheable(value="cachespace",keyGenerator = "myKeyGenerator",unless ="#id>3")  //使用自定义的key生成器
+    @Cacheable(value="cachespace",keyGenerator = "myKeyGenerator",condition ="#id>3",sync =true)  //使用自定义的key生成器
     public Book queryById2(Integer id) {
         System.out.println("使用myKeyGenerator生成key,读取数据库:id="+id);
         return bookMapper.selectById(id);

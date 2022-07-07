@@ -14,7 +14,10 @@ public class BookController {
 
     @GetMapping("{id}")
     public Book getById(@PathVariable Integer id){
-        return bookService.queryById2(id);
+        long s=System.currentTimeMillis();
+        Book book= bookService.queryById2(id);
+        System.out.println("耗时:"+(System.currentTimeMillis()-s));
+        return book;
     }
 
     @DeleteMapping("{id}")

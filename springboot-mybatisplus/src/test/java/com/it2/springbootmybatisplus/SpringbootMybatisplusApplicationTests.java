@@ -5,6 +5,7 @@ package com.it2.springbootmybatisplus;
 import com.alibaba.fastjson.JSONObject;
 import com.it2.springbootmybatisplus.mapper.BookMapper;
 import com.it2.springbootmybatisplus.pojo.Book;
+import com.it2.springbootmybatisplus.service.IUserService;
 import org.apache.http.HttpHost;
 
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -43,6 +44,8 @@ import java.util.List;
 
 @SpringBootTest
 class SpringbootMybatisplusApplicationTests {
+
+
 
     private RestHighLevelClient client;
 
