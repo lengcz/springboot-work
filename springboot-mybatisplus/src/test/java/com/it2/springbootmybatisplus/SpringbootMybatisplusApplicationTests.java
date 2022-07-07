@@ -182,7 +182,21 @@ class SpringbootMybatisplusApplicationTests {
     void testSearch() throws IOException {
         SearchRequest request=new SearchRequest("books");
         SearchSourceBuilder builder=new SearchSourceBuilder();
-        builder.query(QueryBuilders.termQuery("all","java"));// 条件
+        builder.query(QueryBuilders.termQuery("all","JAVA").caseInsensitive(true));// 条件
+        request.source(builder);
+
+        SearchResponse response=client.search(request,RequestOptions.DEFAULT);
+        SearchHits hits=response.getHits();
+        for(SearchHit hit:hits){
+            System.out.println(hit.getSourceAsString());
+        }
+    }
+
+    @Test
+    void testSearchCaseInsensitive() throws IOException {
+        SearchRequest request=new SearchRequest("books");
+        SearchSourceBuilder builder=new SearchSourceBuilder();
+        builder.query(QueryBuilders.termQuery("all","java"));// 条件不区分大小写
         request.source(builder);
 
         SearchResponse response=client.search(request,RequestOptions.DEFAULT);
